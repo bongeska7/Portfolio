@@ -164,12 +164,42 @@ export const CREDENTIALS: Credential[] = [
   {
     id: 3,
     type: "certificate",
+    title: "Hult Prize Local Competition",
+    subtitle: "1st Runner-Up — Sci Sphere Team",
+    meta: "Hult Prize · 2026",
+    accent: "#db2777",
+    accentDim: "rgba(219,39,119,0.14)",
+    image: "/images/cred-4.png",
+  },
+  {
+    id: 4,
+    type: "certificate",
+    title: "Hult Prize Local Competition",
+    subtitle: "1st Runner-Up Certificate",
+    meta: "Hult Prize · 2026",
+    accent: "#db2777",
+    accentDim: "rgba(219,39,119,0.14)",
+    image: "/images/cred-5.png",
+  },
+  {
+    id: 5,
+    type: "certificate",
+    title: "UI/UX Design Program",
+    subtitle: "32-Hour Professional Certificate",
+    meta: "The Hope International · Aug 2025",
+    accent: "#2563eb",
+    accentDim: "rgba(37,99,235,0.14)",
+    image: "/images/cred-6.png",
+  },
+  {
+    id: 6,
+    type: "memory",
     title: "JU-Risk Presentation",
     subtitle: "Friends before colleagues",
     meta: "JU · May 2026",
     accent: "#ff9900",
     accentDim: "rgba(255,153,0,0.14)",
-    image: "/images/cred-4.png",
+    image: "/images/cred-7.png",
   },
 ];
 
@@ -178,7 +208,7 @@ export const CREDENTIALS: Credential[] = [
  * Card 0 stays flat; subsequent cards land at slight angles.
  * Must stay in sync with CREDENTIALS.length.
  */
-export const SETTLED_ROTATIONS = [0, 3, -4, 2] as const;
+export const SETTLED_ROTATIONS = [0, 3, -4, 2, -2, 4, -3] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SkillsBento types & data
