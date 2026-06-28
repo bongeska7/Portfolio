@@ -122,7 +122,7 @@ export default function HeroSection() {
           >
             <Image
               src="/images/Me.png"
-              alt="Omar Ahmad Profile Portrait"
+              alt="Omar Aziz Ahmad Profile Portrait"
               width={96}
               height={96}
               className="object-cover w-full h-full"

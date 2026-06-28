@@ -528,7 +528,7 @@ export default function ContactFooter() {
           "
         >
           <p className="text-white/20 text-[10px] font-mono tracking-wide">
-            © {new Date().getFullYear()} Omar Ahmad — CS Student, Mutah University
+            © {new Date().getFullYear()} Omar Aziz Ahmad — CS Graduate, University of Jordan
           </p>
           <p className="text-white/15 text-[10px] font-mono tracking-wide">
             Built with Next.js · GSAP · Tailwind CSS

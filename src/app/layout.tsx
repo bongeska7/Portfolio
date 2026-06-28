@@ -34,36 +34,32 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://omar-aziz-ahmad.vercel.app"),
 
   title: {
-    default: "Omar Ahmad — Full-Stack Developer & CS Student",
-    template: "%s | Omar Ahmad",
+    default: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
+    template: "%s | Omar Aziz Ahmad",
   },
 
   description:
-    "Omar Ahmad is a Computer Science student at Mutah University building " +
-    "production-grade web applications, AI-powered tools, and interactive data " +
-    "visualizations with Next.js, TypeScript, Python, and GSAP.",
+    "Omar Aziz Ahmad is a Computer Science graduate from the University of Jordan specializing in " +
+    "AI engineering, Python development, product design, and systems thinking.",
 
   keywords: [
+    "Omar Aziz Ahmad",
     "Omar Ahmad",
-    "developer portfolio",
-    "full-stack developer",
-    "Next.js developer",
-    "React developer",
-    "TypeScript",
-    "Python",
-    "GSAP animations",
-    "AI web applications",
-    "data structures visualizer",
-    "CS student Jordan",
-    "Mutah University",
-    "creative developer",
-    "web engineering",
-    "systems architecture",
+    "AI Engineer",
+    "Product Designer",
+    "Systems Thinker",
+    "Python Developer",
+    "Machine Learning Jordan",
+    "University of Jordan",
+    "University of Jordan CS graduate",
+    "creative technologist",
+    "AI systems design",
+    "systems engineering",
   ],
 
-  authors: [{ name: "Omar Ahmad", url: "https://omarahmad.dev" }],
-  creator: "Omar Ahmad",
-  publisher: "Omar Ahmad",
+  authors: [{ name: "Omar Aziz Ahmad", url: "https://omar-aziz-ahmad.vercel.app" }],
+  creator: "Omar Aziz Ahmad",
+  publisher: "Omar Aziz Ahmad",
 
   /*
    * Canonical URL — tells search engines the definitive location of this page
@@ -77,30 +73,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://omarahmad.dev",
-    siteName: "Omar Ahmad — Developer Portfolio",
-    title: "Omar Ahmad — Full-Stack Developer & CS Student",
+    url: "https://omar-aziz-ahmad.vercel.app",
+    siteName: "Omar Aziz Ahmad — Portfolio",
+    title: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
     description:
-      "Production-grade web applications, AI-powered tools, and interactive " +
-      "data visualizations built with Next.js, TypeScript, and Python.",
+      "Computer Science graduate from the University of Jordan specializing in AI engineering, Python, product design, and systems thinking.",
     images: [
       {
         url: "/og-image.png",   // place a 1200×630 image in /public
         width: 1200,
         height: 630,
-        alt: "Omar Ahmad — Full-Stack Developer Portfolio",
+        alt: "Omar Aziz Ahmad — Product Designer & AI Engineer Portfolio",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    site: "@omarahmad_dev",   // update with your real Twitter handle
-    creator: "@omarahmad_dev",
-    title: "Omar Ahmad — Full-Stack Developer & CS Student",
+    title: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
     description:
-      "Building high-end web experiences with Next.js, GSAP, and Python. " +
-      "CS student at Mutah University, open to engineering roles.",
+      "Computer Science graduate from the University of Jordan specializing in AI engineering, Python, product design, and systems thinking.",
     images: ["/og-image.png"],
   },
 
