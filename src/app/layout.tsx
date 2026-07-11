@@ -31,7 +31,7 @@ export const metadata: Metadata = {
    * OpenGraph / Twitter image fields to absolute URLs.
    * Replace with your real production domain when deployed.
    */
-  metadataBase: new URL("https://omar-aziz-ahmad.vercel.app"),
+  metadataBase: new URL("https://omarahmad.dev"),
 
   title: {
     default: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
