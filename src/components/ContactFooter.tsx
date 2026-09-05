@@ -299,20 +299,20 @@ export default function ContactFooter() {
               extraordinary.
             </h2>
 
-            <p className="text-white/30 text-sm leading-relaxed max-w-[30ch] mb-9">
+            <p className="text-white/30 text-sm leading-relaxed max-w-[32ch] mb-6">
               Whether it&apos;s a startup, a side project, or a thesis —
               I&apos;m open to building ambitious things together.
             </p>
 
-            <div ref={socialsRef} className="flex flex-col gap-1 items-start" aria-label="Social links">
-              {/* GitHub Link (No Magnet Wobble) */}
+            <div ref={socialsRef} className="flex flex-col gap-2 items-start" aria-label="Social links and contact info">
+              {/* GitHub Link */}
               <a
                 href="https://github.com/bongeska7"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  group inline-flex items-center gap-3 py-1.5
-                  text-sm font-mono text-white/35
+                  group inline-flex items-center gap-3 py-1
+                  text-sm font-mono text-white/40
                   hover:text-white transition-colors duration-300
                 "
               >
@@ -320,7 +320,7 @@ export default function ContactFooter() {
                   className="
                     block h-px
                     w-5 bg-white/18
-                    group-hover:w-9 group-hover:bg-violet-400
+                    group-hover:w-8 group-hover:bg-violet-400
                     transition-all duration-300 flex-shrink-0
                   "
                   aria-hidden="true"
@@ -339,14 +339,14 @@ export default function ContactFooter() {
                 </span>
               </a>
 
-              {/* LinkedIn Link (No Magnet Wobble) */}
+              {/* LinkedIn Link */}
               <a
                 href="https://www.linkedin.com/in/omarazahmad/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  group inline-flex items-center gap-3 py-1.5
-                  text-sm font-mono text-white/35
+                  group inline-flex items-center gap-3 py-1
+                  text-sm font-mono text-white/40
                   hover:text-white transition-colors duration-300
                 "
               >
@@ -354,7 +354,7 @@ export default function ContactFooter() {
                   className="
                     block h-px
                     w-5 bg-white/18
-                    group-hover:w-9 group-hover:bg-violet-400
+                    group-hover:w-8 group-hover:bg-violet-400
                     transition-all duration-300 flex-shrink-0
                   "
                   aria-hidden="true"
@@ -373,17 +373,67 @@ export default function ContactFooter() {
                 </span>
               </a>
 
-              {/* Separator and Email Address */}
-              <div className="flex flex-col gap-2 mt-3 items-start w-full">
-                <span className="text-white/20 pl-8 font-mono text-xs select-none">-</span>
+              {/* Email Address */}
+              <a
+                href="mailto:omaraziz98765@gmail.com"
+                className="
+                  group inline-flex items-center gap-3 py-1
+                  text-sm font-mono text-white/40 hover:text-white
+                  transition-colors duration-300 select-all
+                "
+              >
                 <span
                   className="
-                    inline-flex items-center gap-3 py-1.5
-                    text-sm font-mono text-white/45 select-all
+                    block h-px
+                    w-5 bg-white/18
+                    group-hover:w-8 group-hover:bg-cyan-400
+                    transition-all duration-300 flex-shrink-0
                   "
-                >
-                  <span className="block h-px w-5 bg-white/18 flex-shrink-0" aria-hidden="true" />
-                  omaraziz98765@gmail.com
+                  aria-hidden="true"
+                />
+                <svg className="w-3.5 h-3.5 text-cyan-400/70 group-hover:text-cyan-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                omaraziz98765@gmail.com
+              </a>
+
+              {/* Phone Number */}
+              <a
+                href="tel:+962558760156"
+                className="
+                  group inline-flex items-center gap-3 py-1
+                  text-sm font-mono text-white/40 hover:text-white
+                  transition-colors duration-300 select-all
+                "
+              >
+                <span
+                  className="
+                    block h-px
+                    w-5 bg-white/18
+                    group-hover:w-8 group-hover:bg-cyan-400
+                    transition-all duration-300 flex-shrink-0
+                  "
+                  aria-hidden="true"
+                />
+                <svg className="w-3.5 h-3.5 text-cyan-400/70 group-hover:text-cyan-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                +962 55 876 0156
+              </a>
+
+              {/* Location & Transferable Saudi Iqama Badge */}
+              <div className="flex flex-wrap items-center gap-2.5 pt-2 mt-1 border-t border-white/[0.06] w-full">
+                <div className="inline-flex items-center gap-1.5 text-xs font-mono text-white/45">
+                  <svg className="w-3.5 h-3.5 text-violet-400 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span>Al Warood, Jeddah</span>
+                </div>
+
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-mono tracking-wide text-emerald-300 bg-emerald-500/10 border border-emerald-500/20">
+                  <span className="w-1 h-1 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                  Transferable Saudi Iqama
                 </span>
               </div>
             </div>
