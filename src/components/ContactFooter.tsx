@@ -397,7 +397,7 @@ export default function ContactFooter() {
                 omaraziz98765@gmail.com
               </a>
 
-              {/* Phone Number */}
+              {/* Phone Number — Saudi */}
               <a
                 href="tel:+962558760156"
                 className="
@@ -419,6 +419,30 @@ export default function ContactFooter() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
                 +962 55 876 0156
+              </a>
+
+              {/* Phone Number — Jordan */}
+              <a
+                href="tel:+962795343754"
+                className="
+                  group inline-flex items-center gap-3 py-1
+                  text-sm font-mono text-white/40 hover:text-white
+                  transition-colors duration-300 select-all
+                "
+              >
+                <span
+                  className="
+                    block h-px
+                    w-5 bg-white/18
+                    group-hover:w-8 group-hover:bg-cyan-400
+                    transition-all duration-300 flex-shrink-0
+                  "
+                  aria-hidden="true"
+                />
+                <svg className="w-3.5 h-3.5 text-cyan-400/70 group-hover:text-cyan-400 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                +962 79 534 3754
               </a>
 
               {/* Location & Transferable Saudi Iqama Badge */}
