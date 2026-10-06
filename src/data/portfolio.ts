@@ -201,6 +201,26 @@ export const CREDENTIALS: Credential[] = [
     accentDim: "rgba(255,153,0,0.14)",
     image: "/images/cred-7.png",
   },
+  {
+    id: 7,
+    type: "certificate",
+    title: "Neural Networks: Zero to Hero",
+    subtitle: "Deep Learning Video Course Series",
+    meta: "Andrej Karpathy · YouTube · 2026",
+    accent: "#7c3aed",
+    accentDim: "rgba(124,58,237,0.14)",
+    image: "/images/cred-8.png",
+  },
+  {
+    id: 8,
+    type: "certificate",
+    title: "Neural Networks",
+    subtitle: "Visual Deep Learning Series",
+    meta: "3Blue1Brown · YouTube · 2026",
+    accent: "#0891b2",
+    accentDim: "rgba(8,145,178,0.14)",
+    image: "/images/cred-9.png",
+  },
 ];
 
 /**
@@ -208,7 +228,7 @@ export const CREDENTIALS: Credential[] = [
  * Card 0 stays flat; subsequent cards land at slight angles.
  * Must stay in sync with CREDENTIALS.length.
  */
-export const SETTLED_ROTATIONS = [0, 3, -4, 2, -2, 4, -3] as const;
+export const SETTLED_ROTATIONS = [0, 3, -4, 2, -2, 4, -3, 2.5, -3.5] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SkillsBento types & data

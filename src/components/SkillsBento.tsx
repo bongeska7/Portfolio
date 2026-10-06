@@ -618,7 +618,7 @@ function StatusWidget() {
   return (
     <BentoCard
       className="md:col-span-4 p-6 md:p-7"
-      glowColor="rgba(16,185,129,0.10)"
+      glowColor="rgba(8,145,178,0.10)"
     >
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
 
@@ -626,16 +626,16 @@ function StatusWidget() {
         <div className="flex items-center gap-4">
           {/* Triple-ring pulsing beacon */}
           <div className="relative flex-shrink-0 w-4 h-4" aria-hidden="true">
-            <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-20 animate-ping" />
-            <span className="absolute inset-[3px] rounded-full bg-emerald-400 opacity-50 animate-pulse" />
-            <span className="absolute inset-[5px] rounded-full bg-emerald-400" />
+            <span className="absolute inset-0 rounded-full bg-cyan-400 opacity-20 animate-ping" />
+            <span className="absolute inset-[3px] rounded-full bg-cyan-400 opacity-50 animate-pulse" />
+            <span className="absolute inset-[5px] rounded-full bg-cyan-400" />
           </div>
           <div>
-            <p className="text-emerald-300 font-semibold text-sm md:text-base tracking-tight leading-tight">
-              Available for engineering roles
+            <p className="text-cyan-300 font-semibold text-sm md:text-base tracking-tight leading-tight">
+              Developer · ICS Financial Systems
             </p>
             <p className="text-white/35 text-xs font-mono mt-0.5">
-              Full-time · Part-time · Freelance — remote friendly
+              Sun – Thu &nbsp;·&nbsp; 08:00 – 16:30 &nbsp;·&nbsp; Jeddah, Saudi Arabia
             </p>
           </div>
         </div>

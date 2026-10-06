@@ -145,7 +145,7 @@ export default function HeroSection() {
             className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"
             aria-hidden="true"
           />
-          Product Designer &middot; AI Engineer &middot; Systems Thinker
+          Product Designer &middot; Software Developer &middot; AI Engineer
         </div>
 
         {/* Heading — "Omar" splits char-by-char; "Ahmad" fades as a gradient word */}
@@ -178,7 +178,7 @@ export default function HeroSection() {
           ref={taglineRef}
           className="mt-6 text-lg sm:text-xl text-white/50 max-w-2xl leading-relaxed font-light"
         >
-          Architecting high-fidelity digital systems and intelligent interfaces at the intersection of design, artificial intelligence, and systems engineering.
+          Building high-fidelity digital systems and intelligent interfaces — bridging design, artificial intelligence, and systems engineering in production environments.
         </p>
 
         {/* CTAs */}
