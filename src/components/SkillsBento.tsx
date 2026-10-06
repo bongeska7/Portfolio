@@ -635,7 +635,7 @@ function StatusWidget() {
               Developer · ICS Financial Systems
             </p>
             <p className="text-white/35 text-xs font-mono mt-0.5">
-              Sun – Thu &nbsp;·&nbsp; 08:00 – 16:30 &nbsp;·&nbsp; Jeddah, Saudi Arabia
+              Sun – Thu &nbsp;·&nbsp; 08:00 – 16:30 &nbsp;·&nbsp; Amman, Jordan
             </p>
           </div>
         </div>
