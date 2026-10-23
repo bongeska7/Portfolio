@@ -34,21 +34,25 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://omarahmad.dev"),
 
   title: {
-    default: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
+    default: "Omar Aziz Ahmad — Software & AI Engineer · Product Designer",
     template: "%s | Omar Aziz Ahmad",
   },
 
   description:
-    "Omar Aziz Ahmad is a Developer at ICS Financial Systems and a Computer Science graduate from the " +
-    "University of Jordan specializing in AI engineering, Python development, product design, and systems thinking.",
+    "Omar Aziz Ahmad is a software and AI engineer at ICS Financial Systems — building LLM agents, " +
+    "full-stack platforms and Oracle-based banking software. Computer Science, University of Jordan.",
 
   keywords: [
     "Omar Aziz Ahmad",
     "Omar Ahmad",
     "AI Engineer",
     "Product Designer",
-    "Systems Thinker",
+    "Software Engineer",
     "Python Developer",
+    "ICS Financial Systems",
+    "Oracle PL/SQL Developer",
+    "LangGraph",
+    "LLM Engineer",
     "Machine Learning Jordan",
     "University of Jordan",
     "University of Jordan CS graduate",
@@ -75,24 +79,24 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://omar-aziz-ahmad.vercel.app",
     siteName: "Omar Aziz Ahmad — Portfolio",
-    title: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
+    title: "Omar Aziz Ahmad — Software & AI Engineer · Product Designer",
     description:
-      "Computer Science graduate from the University of Jordan specializing in AI engineering, Python, product design, and systems thinking.",
+      "Software & AI engineer at ICS Financial Systems — LLM agents, full-stack platforms, Oracle & PL/SQL, and product design.",
     images: [
       {
         url: "/og-image.png",   // place a 1200×630 image in /public
         width: 1200,
         height: 630,
-        alt: "Omar Aziz Ahmad — Product Designer & AI Engineer Portfolio",
+        alt: "Omar Aziz Ahmad — Software & AI Engineer Portfolio",
       },
     ],
   },
 
   twitter: {
     card: "summary_large_image",
-    title: "Omar Aziz Ahmad — Product Designer, AI Engineer & Systems Thinker",
+    title: "Omar Aziz Ahmad — Software & AI Engineer · Product Designer",
     description:
-      "Computer Science graduate from the University of Jordan specializing in AI engineering, Python, product design, and systems thinking.",
+      "Software & AI engineer at ICS Financial Systems — LLM agents, full-stack platforms, Oracle & PL/SQL, and product design.",
     images: ["/og-image.png"],
   },
 

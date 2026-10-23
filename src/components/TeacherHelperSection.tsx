@@ -46,9 +46,18 @@ import {
 // ─────────────────────────────────────────────────────────────────────────────
 
 const STEPS = [
-  { title: "A teacher asks",   body: "A topic, a grade level and the day it's needed." },
-  { title: "I build it with AI", body: "Worksheets, narrated videos or a full game — generated, then hand-tuned." },
-  { title: "It's used in class", body: "Printed for the desks or played on the classroom board." },
+  {
+    title: "Scope & curriculum mapping",
+    body:  "Each brief is mapped to grade level, curriculum standards and learning objectives.",
+  },
+  {
+    title: "AI-accelerated engineering",
+    body:  "LLM, speech and generative-media pipelines for content, with hand-engineered TypeScript where it counts.",
+  },
+  {
+    title: "Deploy & deliver",
+    body:  "Shipped to Vercel for the classroom smartboard, or typeset as print-ready PDFs with answer keys.",
+  },
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -469,7 +478,7 @@ function LessonVideoCard() {
       <div className="relative mb-8">
         <div className="flex items-center gap-2 mb-2">
           <span className="w-1.5 h-1.5 rounded-full bg-pink-400 animate-pulse" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-white/30">AI lesson video</span>
+          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-white/30">Generative AI video</span>
         </div>
         <h3 className="text-xl font-bold tracking-tight text-white">{v.title}</h3>
         <p className="font-mono text-[11px] text-pink-300/70 mt-1">
@@ -677,12 +686,13 @@ function WorksheetsCard() {
       <div className="relative mb-6">
         <div className="flex items-center gap-2 mb-2">
           <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-white/30">Worksheets</span>
+          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-white/30">Curriculum content</span>
         </div>
-        <h3 className="text-xl font-bold tracking-tight text-white">Grade 2 Math, made playful</h3>
+        <h3 className="text-xl font-bold tracking-tight text-white">Grade 2 Math, standards-aligned</h3>
         <p className="text-sm text-white/45 leading-relaxed mt-3 max-w-prose">
-          Themed worksheets where every page has its own characters and mission — with an
-          A/B version when the class needs one, and a matching answer key for the teacher.
+          A worksheet series mapped to Common Core (CCSS) standards — each page a themed mission
+          with recurring characters, differentiated A/B versions where needed, and matching
+          answer keys. Generated, illustrated and typeset for print.
         </p>
       </div>
 
@@ -899,7 +909,7 @@ export default function TeacherHelperSection() {
         <div className="mb-12 md:mb-16 max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-amber-400/20 bg-amber-400/[0.07] mb-5 text-[11px] font-mono tracking-[0.2em] text-amber-200/70 uppercase">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" aria-hidden="true" />
-            Side Business
+            Side Venture · EdTech
           </div>
 
           <h2
@@ -917,9 +927,11 @@ export default function TeacherHelperSection() {
           </h2>
 
           <p className="text-white/50 text-base md:text-lg leading-relaxed">
-            Teachers tell me what their class needs, and I build it fast with AI —
-            printable worksheets, animated lesson videos, and games the whole class
-            plays together on the board.
+            An independent EdTech practice. I engineer custom classroom software and
+            learning content for teachers — real-time voice agents, interactive WebGL
+            games, generative-AI lesson videos and standards-aligned worksheets —
+            using AI-accelerated workflows that turn a brief into a production
+            deployment on a school timeline.
           </p>
         </div>
 
@@ -959,7 +971,7 @@ export default function TeacherHelperSection() {
         <div className="flex items-center gap-3 mb-5">
           <span className="block h-px w-6 bg-white/20" aria-hidden="true" />
           <span className="font-mono text-[11px] tracking-[0.2em] uppercase text-white/35">
-            Classroom games · live
+            Interactive classroom apps · in production
           </span>
         </div>
         <div className="grid md:grid-cols-2 gap-4 md:gap-5 mb-4 md:mb-5">

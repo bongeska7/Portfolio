@@ -15,28 +15,23 @@
  *   user is swept to the target section without a hard anchor jump. The easing
  *   function is a sine-in curve for a natural deceleration feel.
  *
- * ## Active-section tracking (IntersectionObserver)
- *   A single `IntersectionObserver` with `threshold: 0.4` watches all four
- *   target sections. When 40% of a section enters the viewport it is marked
- *   active. This keeps the active state accurate while the user scrolls freely
- *   without any scroll-event listeners or GSAP dependencies.
- *
- *   The observer is created once on mount and cleaned up on unmount — no
- *   React state is set inside the observer callback, only a ref is updated and
- *   a microtask (`queueMicrotask`) is used to batch the state update so the
- *   component re-renders once per intersection change, not once per frame.
+ * ## Active-section tracking
+ *   On scroll (rAF-throttled) the dock finds the last section whose top has
+ *   passed 45% of the viewport height. Unlike intersection *ratios*, this
+ *   stays correct for very tall sections (pinned runways, long grids) and for
+ *   the zero-height contact sentinel, which crosses the line once the footer
+ *   is mostly revealed.
  *
  * ## Auto-hide
- *   The dock hides itself when the user is exactly at the very top of the page
- *   (progress === 0) so it never overlaps the hero text on first load, then
- *   fades in as soon as the user starts scrolling.
+ *   The dock is hidden while the user is still near the top of the hero so it
+ *   never overlaps the hero text on first load, and fades in once they scroll.
  *
  * ## Mobile
  *   On small screens (< 640 px) the label text is hidden and only the icon
  *   dot remains, keeping the pill compact enough to not block content.
  */
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSmoothScroll } from "@/context/SmoothScrollContext";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -51,7 +46,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: "main-content",     label: "Intro",       icon: "✦" },
+  { id: "hero",             label: "Intro",       icon: "✦" },
   { id: "experience",       label: "Work",        icon: "◆" },
   { id: "projects",         label: "Projects",    icon: "◈" },
   { id: "teacherhelper",    label: "Teaching",    icon: "✎" },
@@ -77,7 +72,7 @@ export default function FloatingNav() {
   const lenis = useSmoothScroll();
 
   /** Which section id is currently most visible in the viewport */
-  const [activeId, setActiveId] = useState<string>("main-content");
+  const [activeId, setActiveId] = useState<string>("hero");
 
   /**
    * Whether the dock should be visible. Hidden when the user has not scrolled
@@ -107,73 +102,37 @@ export default function FloatingNav() {
     [lenis],
   );
 
-  // ── Intersection Observer — active section tracking ───────────────────────
+  // ── Active section + visibility, measured on scroll ──────────────────────
   useEffect(() => {
-    /**
-     * We keep a Map<id, intersectionRatio> so that when multiple sections
-     * are partially in view we always activate the one with the highest ratio.
-     */
-    const ratios = new Map<string, number>(
-      NAV_ITEMS.map((item) => [item.id, 0]),
-    );
+    let frame = 0;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          ratios.set(entry.target.id, entry.intersectionRatio);
-        });
+    const measure = () => {
+      frame = 0;
+      const line = window.innerHeight * 0.45;
 
-        // Pick the section with the greatest visible area
-        let bestId   = activeId;
-        let bestRatio = 0;
-        ratios.forEach((ratio, id) => {
-          if (ratio > bestRatio) {
-            bestRatio = ratio;
-            bestId    = id;
-          }
-        });
+      let current = NAV_ITEMS[0]!.id;
+      for (const { id } of NAV_ITEMS) {
+        const el = document.getElementById(id);
+        if (el && el.getBoundingClientRect().top <= line) current = id;
+      }
 
-        // Batch into a microtask to coalesce rapid intersection events
-        queueMicrotask(() => setActiveId(bestId));
-      },
-      {
-        // Fire at 0% (leaving), 40% (our active threshold), and 100%
-        threshold: [0, 0.4, 1],
-      },
-    );
+      setActiveId(current);
+      setVisible(window.scrollY > window.innerHeight * 0.35);
+    };
 
-    // Attach observer to every section that exists in the DOM at mount time
-    NAV_ITEMS.forEach(({ id }) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
-    });
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(measure);
+    };
 
-    return () => observer.disconnect();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // intentionally run once on mount
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
 
-  // ── Visibility: hide at page top, show once user scrolls ─────────────────
-  useEffect(() => {
-    // Use a separate IntersectionObserver on the hero (main-content) to decide
-    // when to show the dock.  When the hero occupies > 80% of the viewport
-    // (i.e. user is right at the top) we hide the dock.
-    const hero = document.getElementById("main-content");
-    if (!hero) {
-      setVisible(true);
-      return;
-    }
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry) return;
-        // Hide only when hero is almost entirely visible (user at very top)
-        setVisible(entry.intersectionRatio < 0.6);
-      },
-      { threshold: [0, 0.6, 1] },
-    );
-
-    obs.observe(hero);
-    return () => obs.disconnect();
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   // ── Render ────────────────────────────────────────────────────────────────

@@ -218,8 +218,7 @@ export default function ProjectShowcase() {
                     fill
                     sizes="50vw"
                     className="object-cover"
-                    priority={i === 0 && imgI === 0}
-                    quality={90}
+                    quality={85}
                   />
                 </div>
               ))}

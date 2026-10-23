@@ -130,7 +130,7 @@ export default function HeroSection() {
               width={96}
               height={96}
               className="object-cover w-full h-full"
-              priority
+              preload
             />
           </div>
         </div>
@@ -149,7 +149,7 @@ export default function HeroSection() {
             className="w-1.5 h-1.5 rounded-full bg-violet-400 animate-pulse"
             aria-hidden="true"
           />
-          Product Designer &middot; Software Developer &middot; AI Engineer
+          Software Engineer &middot; AI Engineer &middot; Product Designer
         </div>
 
         {/* Heading — "Omar" splits char-by-char; "Ahmad" fades as a gradient word */}
@@ -182,7 +182,8 @@ export default function HeroSection() {
           ref={taglineRef}
           className="mt-6 text-lg sm:text-xl text-white/50 max-w-2xl leading-relaxed font-light"
         >
-          Building high-fidelity digital systems and intelligent interfaces — bridging design, artificial intelligence, and systems engineering in production environments.
+          I engineer LLM-powered systems, full-stack platforms and core banking software —
+          bridging AI engineering, backend architecture and product design.
         </p>
 
         {/* Current role — links down to the Experience section */}

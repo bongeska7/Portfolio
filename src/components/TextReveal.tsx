@@ -38,7 +38,7 @@
  *   after hydration (no mismatch because mutations happen client-side only).
  */
 
-import { useEffect, useRef, createElement, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties, type ElementType } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 type ValidTag =
@@ -229,14 +229,10 @@ export default function TextReveal({
   // useEffect replaces this with split spans on the client.
   // `aria-label` is set to the original text so the element is announced
   // correctly by screen readers even after GSAP replaces the inner content.
-  return createElement(
-    as,
-    {
-      ref,
-      className,
-      style,
-      "aria-label": children,
-    } as Record<string, unknown>,
-    children,
+  const Tag = as as ElementType;
+  return (
+    <Tag ref={ref} className={className} style={style} aria-label={children}>
+      {children}
+    </Tag>
   );
 }

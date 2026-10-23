@@ -22,8 +22,6 @@
  * This context provides:
  *   - `useSmoothScroll()` — access the raw `Lenis` instance for
  *     programmatic scrolling (`lenis.scrollTo("#target")`).
- *   - `useLenisScroll()` — subscribe to scroll events reactively
- *     (position, velocity, direction) without prop-drilling.
  *
  * ## Usage
  *
@@ -35,48 +33,26 @@
  *   lenis?.scrollTo("#projects", { duration: 1.4, easing: … });
  */
 
-import React, {
+import {
   createContext,
   useContext,
   useEffect,
-  useRef,
+  useState,
   type ReactNode,
 } from "react";
 import Lenis from "lenis";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
 
 // ---------------------------------------------------------------------------
-// Types
+// Context
 // ---------------------------------------------------------------------------
-
-interface ScrollState {
-  scroll: number;
-  limit: number;
-  velocity: number;
-  direction: 1 | -1;
-  progress: number;
-}
 
 interface SmoothScrollContextValue {
   lenis: Lenis | null;
 }
 
-// ---------------------------------------------------------------------------
-// Contexts
-// ---------------------------------------------------------------------------
-
 const SmoothScrollContext = createContext<SmoothScrollContextValue>({
   lenis: null,
-});
-
-// Separate context for scroll-state updates so consumers that only care
-// about the Lenis instance are not re-rendered on every scroll event.
-const ScrollStateContext = createContext<ScrollState>({
-  scroll: 0,
-  limit: 0,
-  velocity: 0,
-  direction: 1,
-  progress: 0,
 });
 
 // ---------------------------------------------------------------------------
@@ -109,26 +85,14 @@ export function SmoothScrollProvider({
   wheelMultiplier = 1,
   touchMultiplier = 2,
 }: SmoothScrollProviderProps) {
-  const lenisRef = useRef<Lenis | null>(null);
-  const scrollStateRef = useRef<ScrollState>({
-    scroll: 0,
-    limit: 0,
-    velocity: 0,
-    direction: 1,
-    progress: 0,
-  });
-
-  // We keep a stable reference to the scroll-state setter so we can
-  // update it from the Lenis event callback without triggering stale closures.
-  const [scrollState, setScrollState] = React.useState<ScrollState>(
-    scrollStateRef.current,
-  );
+  // Held in state (not a ref) so consumers re-render once Lenis exists.
+  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
     // ------------------------------------------------------------------
     // 1. Instantiate Lenis with autoRaf disabled so GSAP owns the loop.
     // ------------------------------------------------------------------
-    const lenis = new Lenis({
+    const instance = new Lenis({
       lerp,
       wheelMultiplier,
       touchMultiplier,
@@ -138,7 +102,10 @@ export function SmoothScrollProvider({
       autoRaf: false,
     });
 
-    lenisRef.current = lenis;
+    // Publishing an external instance created on mount is the intended use
+    // of state here — consumers need one re-render once Lenis exists.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setLenis(instance);
 
     // ------------------------------------------------------------------
     // 2. Forward Lenis scroll events → GSAP ScrollTrigger.
@@ -146,30 +113,14 @@ export function SmoothScrollProvider({
     //    the scroll position but within the same frame, so it reads the
     //    correct value from the DOM.
     // ------------------------------------------------------------------
-    lenis.on("scroll", (e: Lenis) => {
-      ScrollTrigger.update();
-
-      // Batch state update via ref to avoid excessive re-renders.
-      // Only flush to React state if values meaningfully changed.
-      const next: ScrollState = {
-        scroll: e.scroll,
-        limit: e.limit,
-        velocity: e.velocity,
-        direction: e.direction as 1 | -1,
-        progress: e.progress,
-      };
-      scrollStateRef.current = next;
-      // Use startTransition semantics implicitly — setState in rAF is
-      // already batched in React 18 concurrent mode.
-      setScrollState({ ...next });
-    });
+    instance.on("scroll", ScrollTrigger.update);
 
     // ------------------------------------------------------------------
     // 3. Hook Lenis into the GSAP ticker.
     //    gsap.ticker time is in seconds; Lenis.raf() expects milliseconds.
     // ------------------------------------------------------------------
     const tickerCallback = (time: number) => {
-      lenis.raf(time * 1000);
+      instance.raf(time * 1000);
     };
     gsap.ticker.add(tickerCallback);
 
@@ -184,9 +135,9 @@ export function SmoothScrollProvider({
     ScrollTrigger.scrollerProxy(document.body, {
       scrollTop(value?: number) {
         if (arguments.length && value !== undefined) {
-          lenis.scrollTo(value, { immediate: true });
+          instance.scrollTo(value, { immediate: true });
         }
-        return lenis.scroll;
+        return instance.scroll;
       },
       getBoundingClientRect() {
         return {
@@ -210,16 +161,14 @@ export function SmoothScrollProvider({
       gsap.ticker.remove(tickerCallback);
       ScrollTrigger.scrollerProxy(document.body, undefined as never);
       ScrollTrigger.defaults({ scroller: undefined });
-      lenis.destroy();
-      lenisRef.current = null;
+      instance.destroy();
+      setLenis(null);
     };
   }, [lerp, wheelMultiplier, touchMultiplier]);
 
   return (
-    <SmoothScrollContext.Provider value={{ lenis: lenisRef.current }}>
-      <ScrollStateContext.Provider value={scrollState}>
-        {children}
-      </ScrollStateContext.Provider>
+    <SmoothScrollContext.Provider value={{ lenis }}>
+      {children}
     </SmoothScrollContext.Provider>
   );
 }
@@ -237,16 +186,4 @@ export function SmoothScrollProvider({
  */
 export function useSmoothScroll(): Lenis | null {
   return useContext(SmoothScrollContext).lenis;
-}
-
-/**
- * Subscribes to real-time scroll state (position, velocity, direction,
- * progress). The component re-renders on every scroll frame, so use it
- * only where you genuinely need reactive scroll data.
- *
- * @example
- * const { progress, velocity } = useLenisScroll();
- */
-export function useLenisScroll(): ScrollState {
-  return useContext(ScrollStateContext);
 }

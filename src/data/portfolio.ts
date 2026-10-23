@@ -27,7 +27,9 @@
  *    SETTLED_ROTATIONS   — readonly number[]
  *
  *  SkillsBento
- *    TECH_CATEGORIES     — TechCategory[]
+ *    SKILL_GROUPS        — Record<SkillGroupId, SkillGroup>
+ *    PROGRAMMING_LANGUAGES — string[]
+ *    SPOKEN_LANGUAGES    — SpokenLanguage[]
  *    TERMINAL_LINES      — TermLine[]
  *    TERM_COLOR          — Record<TermType, string>
  *    NET_NODES           — NetNode[]
@@ -50,6 +52,9 @@ export interface Role {
   about: string;
   /** What you work on — rendered as a bullet list, hidden when empty */
   highlights: string[];
+  /** Day-to-day technologies */
+  stack: string[];
+  /** Business domain tags */
   focus: string[];
   link?: string;
 }
@@ -59,13 +64,15 @@ export const CURRENT_ROLE: Role = {
   title: "Developer",
   location: "Amman, Jordan",
   type: "Full-time",
-  period: "Present",
+  period: "Oct 2026 — Present",
   schedule: "Sun – Thu · 08:00 – 16:30",
   about:
     "ICS Financial Systems (ICSFS) builds ICS BANKS — a core banking software suite that " +
-    "banks in many countries run their day-to-day operations on.",
-  // TODO: add 2–4 short lines about what you build at ICS, e.g. modules, stack, impact.
+    "banks in many countries run their day-to-day operations on. I work on the Oracle side " +
+    "of the platform: SQL and PL/SQL on Oracle Database, alongside Java.",
+  // TODO: add 2–4 short lines about what you build at ICS once you have them (modules, impact).
   highlights: [],
+  stack: ["Oracle Database", "PL/SQL", "SQL", "Java", "oracledb"],
   focus: ["Core Banking", "Enterprise Software", "Financial Systems"],
   link: "https://www.icsfs.com",
 };
@@ -100,9 +107,10 @@ export const CLASSROOM_GAMES: ClassroomGame[] = [
     subject: "Math",
     tagline: "A live voice helper on the classroom projector.",
     description:
-      "The teacher holds Space and asks a question; Max answers out loud with his mouth moving, " +
-      "then gets the whole class counting and answering together. Speech-to-speech over the " +
-      "Gemini Live API, with short-lived tokens so the API key never reaches the browser.",
+      "A real-time voice agent for the classroom projector. Speech-to-speech over the Gemini " +
+      "Live API with push-to-talk turn control, a Rive-animated character lip-synced to the " +
+      "audio stream, session resumption for full-length lessons, and ephemeral tokens minted " +
+      "by a serverless function so the API key never reaches the browser.",
     tech: ["Gemini Live API", "Rive", "TypeScript", "Vite", "Vercel Functions"],
     url: "https://max-robot.vercel.app",
     accent: "#38bdf8",
@@ -116,9 +124,10 @@ export const CLASSROOM_GAMES: ClassroomGame[] = [
     subject: "Science",
     tagline: "Parts of a plant, played on the smartboard.",
     description:
-      "Children drag or tap cards to answer, and Pip the seed grows a new part — roots, stem, " +
-      "leaves, flower, fruit — for every level the class finishes. Every line is voiced, and the " +
-      "game turns its effects down on slow classroom computers.",
+      "A touch-first learning game for the smartboard: drag-or-tap interactions, a WebGL " +
+      "(PixiJS) garden that grows a new plant part with every level, and fully voiced dialogue " +
+      "pre-rendered with neural text-to-speech. The renderer measures frame rate and scales " +
+      "its effects down on low-end classroom hardware.",
     tech: ["React", "Motion", "PixiJS", "TypeScript", "Edge TTS"],
     url: "https://pips-magic-garden.vercel.app",
     accent: "#10b981",
@@ -145,8 +154,8 @@ export const LESSON_VIDEO: LessonVideo = {
   subject: "Science",
   duration: "1:14",
   description:
-    "An AI-animated, narrated lesson: a student and her teacher dig up a plant to meet its " +
-    "roots, stem, leaves, flower and fruit — made for the class screen.",
+    "A narrated, AI-generated science lesson scripted to the Grade 1 curriculum — produced " +
+    "with generative video and voice models, then edited for the class screen.",
   src: "/videos/plants-lesson.mp4",
   poster: "/images/teacherhelper/plants-poster.jpg",
   keywords: ["Roots", "Stem", "Leaves", "Flower", "Fruit"],
@@ -376,36 +385,112 @@ export const SETTLED_ROTATIONS = [0, 3, -4, 2, -2, 4, -3, 2.5, -3.5] as const;
 // SkillsBento types & data
 // ─────────────────────────────────────────────────────────────────────────────
 
-export interface TechCategory {
-  label: string;
+export type SkillGroupId =
+  | "ai" | "data" | "backend" | "ml" | "frontend" | "devops" | "security" | "design";
+
+export interface SkillGroup {
+  /** Small mono label above the title */
+  eyebrow: string;
+  title: string;
+  blurb: string;
+  /** Accent hex — used for pills, dots and the hover spotlight */
   accent: string;
-  dim: string;
-  border: string;
-  items: readonly string[];
+  items: string[];
+  /** Subset currently being learned — rendered with a "learning" marker */
+  learning?: string[];
 }
 
-export const TECH_CATEGORIES: TechCategory[] = [
-  {
-    label: "UI & Development",
-    accent: "#7c3aed",
-    dim: "rgba(124,58,237,0.10)",
-    border: "rgba(124,58,237,0.22)",
-    items: ["React", "Flutter", "ASP.NET Core", "Cypress", "LÖVE 2D"],
+export const SKILL_GROUPS: Record<SkillGroupId, SkillGroup> = {
+  ai: {
+    eyebrow: "AI Engineering",
+    title: "LLM Systems & Agents",
+    blurb:
+      "Agentic workflows, automated LLM evaluation and real-time voice AI — " +
+      "orchestrated with LangGraph and served behind async APIs.",
+    accent: "#a78bfa",
+    items: [
+      "LangGraph", "LangChain", "OpenAI API", "Gemini Live API", "Hugging Face",
+      "Agent Orchestration", "LLM Evaluation", "Async Pipelines",
+    ],
+    learning: ["RAG", "Vector Databases"],
   },
-  {
-    label: "Backend & Infrastructure",
-    accent: "#0891b2",
-    dim: "rgba(8,145,178,0.10)",
-    border: "rgba(8,145,178,0.22)",
-    items: ["Docker", "LangChain", "Postman", "Power BI"],
+  data: {
+    eyebrow: "Databases",
+    title: "Oracle & SQL",
+    blurb: "Relational modelling and in-database logic — Oracle and PL/SQL daily at ICSFS.",
+    accent: "#fb7185",
+    items: [
+      "Oracle Database", "PL/SQL", "SQL", "oracledb", "SQL Server",
+      "Entity Framework Core", "Firestore", "Redis",
+    ],
   },
-  {
-    label: "Design & Craft",
-    accent: "#10b981",
-    dim: "rgba(16,185,129,0.10)",
-    border: "rgba(16,185,129,0.22)",
-    items: ["Figma", "Problem Solving"],
+  backend: {
+    eyebrow: "Backend",
+    title: "Services & APIs",
+    blurb: "REST services, auth and async workers with clean N-tier boundaries.",
+    accent: "#22d3ee",
+    items: [
+      "FastAPI", "ASP.NET Core", "Java", "REST API Design",
+      "JWT · ASP.NET Identity", "Celery", "N-tier Architecture",
+    ],
   },
+  ml: {
+    eyebrow: "Machine Learning",
+    title: "Applied ML",
+    blurb: "Feature engineering, model selection and hyperparameter tuning on real data.",
+    accent: "#34d399",
+    items: ["scikit-learn", "LightGBM", "PyTorch", "pandas", "NumPy", "SciPy", "Optuna", "OpenCV"],
+  },
+  frontend: {
+    eyebrow: "Frontend & Mobile",
+    title: "Interfaces",
+    blurb: "Typed, animated and responsive — on the web and on mobile.",
+    accent: "#60a5fa",
+    items: [
+      "React", "Next.js", "TypeScript", "Tailwind CSS", "GSAP",
+      "Flutter", "Dart", "Material 3", "Recharts",
+    ],
+  },
+  devops: {
+    eyebrow: "DevOps & Cloud",
+    title: "Ship & Operate",
+    blurb: "Containerised services, version control and cloud deployment.",
+    accent: "#fbbf24",
+    items: ["Docker", "Git", "GitHub", "GitLab", "Linux", "Vercel", "GCP"],
+    learning: ["Azure · AZ-900", "CI/CD"],
+  },
+  security: {
+    eyebrow: "Security & QA",
+    title: "Break It First",
+    blurb: "Black-box web testing against the OWASP classics, plus automated E2E and API tests.",
+    accent: "#4ade80",
+    items: ["Burp Suite", "XSS · SQLi · XXE", "Black-box Testing", "Cypress", "Postman"],
+  },
+  design: {
+    eyebrow: "Product Design",
+    title: "Design & Product",
+    blurb: "From Figma flows to shipped UI — designing the products I build.",
+    accent: "#f472b6",
+    items: ["Figma", "UI/UX Design", "User-Centered Design", "Data Visualisation", "Product Thinking"],
+  },
+};
+
+export const PROGRAMMING_LANGUAGES = [
+  "Python", "TypeScript", "Java", "C++", "SQL", "PL/SQL",
+  "JavaScript", "Dart", "MATLAB", "Lua", "HTML", "CSS",
+];
+
+export interface SpokenLanguage {
+  name: string;
+  level: string;
+  /** 0–1, drives the proficiency bar */
+  value: number;
+}
+
+export const SPOKEN_LANGUAGES: SpokenLanguage[] = [
+  { name: "Arabic",  level: "Native", value: 1 },
+  { name: "English", level: "C1",     value: 0.85 },
+  { name: "German",  level: "B2",     value: 0.68 },
 ];
 
 // ── Terminal (SecurityCard) ───────────────────────────────────────────────────
@@ -418,18 +503,16 @@ export interface TermLine {
 }
 
 export const TERMINAL_LINES: TermLine[] = [
-  { text: "$ init sec-scanner v3.2.1", type: "cmd" },
-  { text: "> scanning attack surface...", type: "info" },
-  { text: "■ open ports: 22, 80, 443", type: "info" },
-  { text: "✓ HTTPS — TLS 1.3 enforced", type: "success" },
-  { text: "✓ HSTS preload — 2yr max-age", type: "success" },
-  { text: "! CVE-2024-28859 — critical", type: "error" },
-  { text: "> applying patch 0xF3A2...", type: "info" },
-  { text: "✓ patched in 148ms", type: "success" },
-  { text: "$ docker build --no-cache .", type: "cmd" },
-  { text: "✓ portfolio:v2.1  341MB", type: "success" },
-  { text: "$ deploying → prod-01...", type: "cmd" },
-  { text: "✓ health checks passed  ■", type: "success" },
+  { text: "$ burp scan https://shop.lab.local", type: "cmd" },
+  { text: "> crawling 42 endpoints...", type: "info" },
+  { text: "! reflected XSS      /search?q=", type: "error" },
+  { text: "! SQL injection      /product?id=", type: "error" },
+  { text: "! XXE                /api/import", type: "error" },
+  { text: "✓ fixed: output encoding + CSP", type: "success" },
+  { text: "✓ fixed: parameterised queries", type: "success" },
+  { text: "✓ fixed: external entities off", type: "success" },
+  { text: "$ npx cypress run --spec e2e/checkout", type: "cmd" },
+  { text: "✓ 24 passing — 0 vulnerabilities re-found", type: "success" },
 ];
 
 export const TERM_COLOR: Record<TermType, string> = {
@@ -439,31 +522,29 @@ export const TERM_COLOR: Record<TermType, string> = {
   error: "#f87171",   // red-400
 };
 
-// ── Agent network visualization (IntelligentSystemsCard) ─────────────────────
+// ── Agent graph (AI card) — modelled on the conversational-AI evaluation
+//    pipeline: personas + scenarios → tester ⇄ target → judge → map-reduce →
+//    report / dashboard. Coordinates are in a 320 × 150 viewBox.
 
 export interface NetNode {
   x: number;
   y: number;
   r: number;
   color: string;
+  label: string;
 }
 
 export const NET_NODES: NetNode[] = [
-  { x: 16, y: 44, r: 4, color: "#7c3aed" },
-  { x: 46, y: 18, r: 3, color: "#0891b2" },
-  { x: 72, y: 42, r: 5, color: "#7c3aed" },
-  { x: 96, y: 16, r: 3.5, color: "#10b981" },
-  { x: 120, y: 46, r: 4, color: "#0891b2" },
-  { x: 58, y: 66, r: 6, color: "#7c3aed" },
-  { x: 92, y: 72, r: 3, color: "#10b981" },
-  { x: 138, y: 58, r: 4, color: "#d97706" },
-  { x: 158, y: 28, r: 3, color: "#0891b2" },
-  { x: 30, y: 74, r: 3.5, color: "#10b981" },
-  { x: 172, y: 64, r: 3, color: "#d97706" },
+  { x: 28,  y: 38,  r: 5, color: "#a78bfa", label: "personas" },
+  { x: 28,  y: 112, r: 5, color: "#a78bfa", label: "scenarios" },
+  { x: 112, y: 75,  r: 8, color: "#c4b5fd", label: "tester agent" },
+  { x: 196, y: 30,  r: 6, color: "#22d3ee", label: "target LLM" },
+  { x: 196, y: 120, r: 7, color: "#f472b6", label: "judge agent" },
+  { x: 258, y: 75,  r: 6, color: "#34d399", label: "map-reduce" },
+  { x: 300, y: 32,  r: 4, color: "#fbbf24", label: "report" },
+  { x: 300, y: 118, r: 4, color: "#fbbf24", label: "dashboard" },
 ];
 
 export const NET_EDGES: [number, number][] = [
-  [0, 1], [1, 2], [2, 3], [3, 4], [1, 5],
-  [2, 5], [5, 6], [4, 7], [7, 8], [6, 7],
-  [9, 5], [8, 10], [3, 8],
+  [0, 2], [1, 2], [2, 3], [3, 4], [2, 4], [4, 5], [5, 6], [5, 7],
 ];

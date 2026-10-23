@@ -44,3 +44,6 @@ next-env.d.ts
 # 100 MB file limit). Web-ready copies live in /public/images/teacherhelper
 # and /public/videos.
 /TeacherHelper/
+
+# Private career profile — internal CV source, not for the public repo
+Omar_Ahmad_Master_Career_Profile.md

@@ -337,15 +337,33 @@ export default function ExperienceSection() {
                 </ul>
               )}
 
-              <div data-reveal className="flex flex-wrap gap-2 mt-auto">
-                {role.focus.map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-3 py-1 text-[11px] font-mono tracking-wider rounded-full border border-cyan-500/25 bg-cyan-500/10 text-cyan-200/80"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <div data-reveal className="mt-auto flex flex-col gap-4">
+                <div>
+                  <p className="mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-white/30">Stack</p>
+                  <div className="flex flex-wrap gap-2">
+                    {role.stack.map((tech) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 text-[11px] font-mono font-semibold tracking-wider rounded-lg border border-rose-400/30 bg-rose-400/10 text-rose-200"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <p className="mb-2 font-mono text-[10px] tracking-[0.2em] uppercase text-white/30">Domain</p>
+                  <div className="flex flex-wrap gap-2">
+                    {role.focus.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-3 py-1 text-[11px] font-mono tracking-wider rounded-full border border-cyan-500/25 bg-cyan-500/10 text-cyan-200/80"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {role.link && (
@@ -389,7 +407,7 @@ export default function ExperienceSection() {
           </span>
           <span className="text-sm text-white/60 group-hover:text-white/85 transition-colors duration-300">
             <span className="font-semibold text-white">TeacherHelper</span>
-            {" "}— worksheets, AI lesson videos and classroom games, built fast for teachers.
+            {" "}— custom EdTech apps, real-time voice AI and generative learning content for schools.
           </span>
           <span className="sm:ml-auto text-amber-300 transition-transform duration-300 group-hover:translate-x-1" aria-hidden="true">
             →

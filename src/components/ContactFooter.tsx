@@ -15,7 +15,6 @@ import {
   type ChangeEvent,
 } from "react";
 import { gsap, ScrollTrigger } from "@/lib/gsap";
-import MagnetButton from "@/components/MagnetButton";
 import { sendEmail } from "@/app/actions/sendEmail";
 
 
@@ -233,7 +232,7 @@ export default function ContactFooter() {
         py-14 md:py-0
         static
         md:fixed md:bottom-0 md:left-0 md:right-0
-        md:h-[70vh]
+        md:h-[max(70vh,min(640px,100vh))]
       "
       style={{ zIndex: 0 }}
     >

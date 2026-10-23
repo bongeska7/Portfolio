@@ -16,7 +16,7 @@ import ContactFooter        from "@/components/ContactFooter";
 //
 // Footer reveal architecture:
 //   • <main> has `relative z-10 bg-[#07070d]` — sits above the fixed footer.
-//   • `md:pb-[70vh]` creates scroll runway equal to the footer height so the
+//   • The desktop bottom margin (max of 70vh and 640px) creates scroll runway equal to the footer height so the
 //     user has room to scroll and reveal the fixed footer beneath the content.
 //   • #contact-sentinel is a zero-height div at the end of the content.
 //     ContactFooter's GSAP ScrollTrigger watches it to fire the entrance
@@ -29,12 +29,12 @@ export default function HomePage() {
       {/*
        * `relative z-10` — establishes a stacking context above the fixed
        *   ContactFooter (z-0), so all content here covers the footer.
-       * `md:pb-[70vh]` — scroll runway: gives 70 vh of extra scroll space on
-       *   desktop so the user can fully reveal the fixed 70 vh footer.
+       * Desktop bottom margin — scroll runway: same height as the fixed footer on
+       *   desktop (≥ 640px tall so the form never clips on short laptops).
        */}
       <main
         id="main-content"
-        className="relative z-10 bg-[#07070d] text-white md:mb-[70vh]"
+        className="relative z-10 bg-[#07070d] text-white md:mb-[max(70vh,min(640px,100vh))]"
       >
         {/* ── Hero ───────────────────────────────────────────────────────── */}
         <HeroSection />
