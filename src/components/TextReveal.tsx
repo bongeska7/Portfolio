@@ -62,6 +62,20 @@ interface TextRevealProps {
   triggerOnScroll?: boolean;
 }
 
+/**
+ * Returns the element itself or the nearest ancestor (up to 3 levels) that
+ * paints a gradient through its text with `background-clip: text`.
+ */
+function findClipTextHost(el: HTMLElement): HTMLElement | null {
+  let node: HTMLElement | null = el;
+  for (let depth = 0; node && depth < 4; depth++, node = node.parentElement) {
+    const cs = getComputedStyle(node);
+    const clip = cs.backgroundClip || cs.getPropertyValue("-webkit-background-clip");
+    if (clip === "text" && cs.backgroundImage !== "none") return node;
+  }
+  return null;
+}
+
 export default function TextReveal({
   children,
   as = "div",
@@ -89,12 +103,28 @@ export default function TextReveal({
     el.innerHTML = "";
     el.setAttribute("aria-hidden", "true");
 
+    const innerSpans: HTMLSpanElement[] = [];
+
+    // In char mode, letters of one word share a no-wrap wrapper so lines can
+    // only break between words (never "TeacherHelpe / r" on narrow screens).
+    let wordBox: HTMLSpanElement | null = null;
+    const target = () => {
+      if (splitBy !== "chars") return el;
+      if (!wordBox) {
+        wordBox = document.createElement("span");
+        wordBox.style.cssText = "display:inline-block; white-space:nowrap";
+        el.appendChild(wordBox);
+      }
+      return wordBox;
+    };
+
     units.forEach((unit, i) => {
       // Spaces between chars — preserve width without creating clipped spans
       if (splitBy === "chars" && unit === " ") {
         const space = document.createElement("span");
         space.style.cssText = "display:inline-block; width:0.28em";
         el.appendChild(space);
+        wordBox = null; // next letter starts a new word
         return;
       }
 
@@ -112,7 +142,8 @@ export default function TextReveal({
       inner.style.cssText = "display:inline-block";
       inner.textContent = unit;
       outer.appendChild(inner);
-      el.appendChild(outer);
+      target().appendChild(outer);
+      innerSpans.push(inner);
 
       // Natural word spacing for word-split mode
       if (splitBy === "words" && i < units.length - 1) {
@@ -120,11 +151,41 @@ export default function TextReveal({
       }
     });
 
-    // ── 2. Collect inner spans and set initial hidden state ───────────────
-    const innerSpans = Array.from(
-      el.querySelectorAll<HTMLSpanElement>("span > span"),
-    );
+    // ── 2. Set initial hidden state on the animated inner spans ───────────
     gsap.set(innerSpans, { y: "105%", opacity: 0 });
+
+    // ── 2b. Gradient text support ─────────────────────────────────────────
+    // `background-clip: text` on an ancestor does not paint into the
+    // transformed inline-block units, so they would render invisible.
+    // Copy the gradient onto each unit, sized to the whole phrase and offset
+    // by the unit's position so the colours stay continuous across it.
+    // The phrase box is the union of the (untransformed) outer clip spans —
+    // an inline host's own rect does not line up with inline-block children.
+    const gradientHost = findClipTextHost(el);
+    const paintGradient = () => {
+      if (!gradientHost) return;
+      const image = getComputedStyle(gradientHost).backgroundImage;
+      const boxes = innerSpans.map((s) => s.parentElement!.getBoundingClientRect());
+      const left   = Math.min(...boxes.map((b) => b.left));
+      const top    = Math.min(...boxes.map((b) => b.top));
+      const width  = Math.max(...boxes.map((b) => b.right))  - left;
+      const height = Math.max(...boxes.map((b) => b.bottom)) - top;
+      innerSpans.forEach((span, i) => {
+        const box = boxes[i]!;
+        Object.assign(span.style, {
+          backgroundImage:      image,
+          backgroundSize:       `${width}px ${height}px`,
+          backgroundPosition:   `${left - box.left}px ${top - box.top}px`,
+          backgroundRepeat:     "no-repeat",
+          backgroundClip:       "text",
+          webkitBackgroundClip: "text",
+          color:                "transparent",
+        });
+      });
+    };
+    paintGradient();
+    const resizeObserver = gradientHost ? new ResizeObserver(paintGradient) : undefined;
+    if (gradientHost) resizeObserver?.observe(gradientHost);
 
     // ── 3. Animation function ─────────────────────────────────────────────
     const animate = () => {
@@ -155,6 +216,7 @@ export default function TextReveal({
 
     // ── 5. Cleanup ────────────────────────────────────────────────────────
     return () => {
+      resizeObserver?.disconnect();
       scrollTrigger?.kill();
       gsap.killTweensOf(innerSpans);
       el.textContent = originalText; // restore for re-mounts

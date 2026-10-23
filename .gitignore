@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# TeacherHelper source files — the raw lesson video is 125 MB (over GitHub's
+# 100 MB file limit). Web-ready copies live in /public/images/teacherhelper
+# and /public/videos.
+/TeacherHelper/

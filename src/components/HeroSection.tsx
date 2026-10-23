@@ -13,8 +13,9 @@
  *   1.10 s — "Omar" chars begin staggering up  (via TextReveal)
  *   1.45 s — Gradient "Ahmad" word fades up
  *   1.65 s — Tagline slides up
- *   1.80 s — CTA buttons stagger in
- *   2.10 s — Scroll cue fades in
+ *   1.80 s — "Currently at ICS Financial Systems" chip pops in
+ *   1.95 s — CTA buttons stagger in
+ *   2.30 s — Scroll cue fades in
  *
  * The two CTA links are wrapped in <MagnetButton> so they physically
  * attract toward the cursor on hover.
@@ -31,6 +32,7 @@ export default function HeroSection() {
   const badgeRef     = useRef<HTMLDivElement>(null);
   const ahmadRef     = useRef<HTMLSpanElement>(null);
   const taglineRef   = useRef<HTMLParagraphElement>(null);
+  const roleRef      = useRef<HTMLAnchorElement>(null);
   const cta1Ref      = useRef<HTMLDivElement>(null);
   const cta2Ref      = useRef<HTMLDivElement>(null);
   const scrollCueRef = useRef<HTMLDivElement>(null);
@@ -47,11 +49,13 @@ export default function HeroSection() {
       tl.from(ahmadRef.current,   { y: 38, opacity: 0, duration: 0.80 }, 1.45);
       // Tagline
       tl.from(taglineRef.current, { y: 22, opacity: 0, duration: 0.65 }, 1.65);
+      // Current-role chip
+      tl.from(roleRef.current,    { y: 14, scale: 0.92, opacity: 0, duration: 0.6, ease: "back.out(1.8)" }, 1.8);
       // CTA buttons with a small inter-button stagger
-      tl.from(cta1Ref.current,    { y: 18, opacity: 0, duration: 0.55 }, 1.82);
-      tl.from(cta2Ref.current,    { y: 18, opacity: 0, duration: 0.55 }, 1.94);
+      tl.from(cta1Ref.current,    { y: 18, opacity: 0, duration: 0.55 }, 1.95);
+      tl.from(cta2Ref.current,    { y: 18, opacity: 0, duration: 0.55 }, 2.07);
       // Scroll cue last
-      tl.from(scrollCueRef.current, { opacity: 0, duration: 0.5 }, 2.2);
+      tl.from(scrollCueRef.current, { opacity: 0, duration: 0.5 }, 2.3);
     });
 
     return () => ctx.revert();
@@ -181,9 +185,30 @@ export default function HeroSection() {
           Building high-fidelity digital systems and intelligent interfaces — bridging design, artificial intelligence, and systems engineering in production environments.
         </p>
 
+        {/* Current role — links down to the Experience section */}
+        <a
+          ref={roleRef}
+          href="#experience"
+          className="
+            group mt-8 inline-flex flex-wrap items-center justify-center gap-x-2 gap-y-1
+            px-4 py-2.5 rounded-2xl sm:rounded-full
+            border border-cyan-400/25 bg-cyan-400/[0.06]
+            hover:border-cyan-300/50 hover:bg-cyan-400/10
+            text-sm transition-colors duration-300
+          "
+        >
+          <span className="relative flex w-2 h-2" aria-hidden="true">
+            <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-60 animate-ping" />
+            <span className="relative w-2 h-2 rounded-full bg-emerald-400" />
+          </span>
+          <span className="text-white/55">Currently</span>
+          <span className="font-semibold text-white">Developer at ICS Financial Systems</span>
+          <span className="text-cyan-300 transition-transform duration-300 group-hover:translate-y-0.5" aria-hidden="true">↓</span>
+        </a>
+
         {/* CTAs */}
         <div
-          className="mt-10 flex flex-col sm:flex-row gap-1 justify-center items-center"
+          className="mt-8 flex flex-col sm:flex-row gap-1 justify-center items-center"
           role="group"
           aria-label="Primary calls to action"
         >

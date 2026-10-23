@@ -52,7 +52,9 @@ interface NavItem {
 
 const NAV_ITEMS: NavItem[] = [
   { id: "main-content",     label: "Intro",       icon: "✦" },
+  { id: "experience",       label: "Work",        icon: "◆" },
   { id: "projects",         label: "Projects",    icon: "◈" },
+  { id: "teacherhelper",    label: "Teaching",    icon: "✎" },
   { id: "credentials",      label: "Credentials", icon: "◉" },
   { id: "skills",           label: "Skills",      icon: "◎" },
   // ⚠️  "contact" is position:fixed — Lenis cannot compute a scroll

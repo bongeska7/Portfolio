@@ -11,6 +11,14 @@
  * Exports
  * ─────────────────────────────────────────────────────────────────────────────
  *
+ *  ExperienceSection
+ *    CURRENT_ROLE        — Role
+ *
+ *  TeacherHelperSection
+ *    CLASSROOM_GAMES     — ClassroomGame[]
+ *    LESSON_VIDEO        — LessonVideo
+ *    WORKSHEETS          — WorksheetPage[]
+ *
  *  ProjectShowcase
  *    PROJECTS            — Project[]
  *
@@ -25,6 +33,140 @@
  *    NET_NODES           — NetNode[]
  *    NET_EDGES           — [number, number][]
  */
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ExperienceSection types & data
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface Role {
+  company: string;
+  title: string;
+  location: string;
+  type: string;
+  /** e.g. "2026 — Present" */
+  period: string;
+  schedule: string;
+  /** One or two sentences about the company */
+  about: string;
+  /** What you work on — rendered as a bullet list, hidden when empty */
+  highlights: string[];
+  focus: string[];
+  link?: string;
+}
+
+export const CURRENT_ROLE: Role = {
+  company: "ICS Financial Systems",
+  title: "Developer",
+  location: "Amman, Jordan",
+  type: "Full-time",
+  period: "Present",
+  schedule: "Sun – Thu · 08:00 – 16:30",
+  about:
+    "ICS Financial Systems (ICSFS) builds ICS BANKS — a core banking software suite that " +
+    "banks in many countries run their day-to-day operations on.",
+  // TODO: add 2–4 short lines about what you build at ICS, e.g. modules, stack, impact.
+  highlights: [],
+  focus: ["Core Banking", "Enterprise Software", "Financial Systems"],
+  link: "https://www.icsfs.com",
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
+// TeacherHelperSection types & data
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface ClassroomGame {
+  id: string;
+  title: string;
+  grade: string;
+  subject: string;
+  tagline: string;
+  description: string;
+  tech: string[];
+  url: string;
+  accent: string;
+  /** Short caveat shown under the description */
+  note?: string;
+  /** Optional screenshot (path relative to /public). Falls back to the illustrated art. */
+  image?: string;
+  /** Which built-in illustration to draw when there is no screenshot */
+  art: "max" | "pip";
+}
+
+export const CLASSROOM_GAMES: ClassroomGame[] = [
+  {
+    id: "max",
+    title: "Max the Robot Cat",
+    grade: "Grade 2",
+    subject: "Math",
+    tagline: "A live voice helper on the classroom projector.",
+    description:
+      "The teacher holds Space and asks a question; Max answers out loud with his mouth moving, " +
+      "then gets the whole class counting and answering together. Speech-to-speech over the " +
+      "Gemini Live API, with short-lived tokens so the API key never reaches the browser.",
+    tech: ["Gemini Live API", "Rive", "TypeScript", "Vite", "Vercel Functions"],
+    url: "https://max-robot.vercel.app",
+    accent: "#38bdf8",
+    note: "Teacher sign-in required",
+    art: "max",
+  },
+  {
+    id: "pip",
+    title: "Pip's Magic Garden",
+    grade: "Grade 1",
+    subject: "Science",
+    tagline: "Parts of a plant, played on the smartboard.",
+    description:
+      "Children drag or tap cards to answer, and Pip the seed grows a new part — roots, stem, " +
+      "leaves, flower, fruit — for every level the class finishes. Every line is voiced, and the " +
+      "game turns its effects down on slow classroom computers.",
+    tech: ["React", "Motion", "PixiJS", "TypeScript", "Edge TTS"],
+    url: "https://pips-magic-garden.vercel.app",
+    accent: "#10b981",
+    art: "pip",
+  },
+];
+
+export interface LessonVideo {
+  title: string;
+  grade: string;
+  subject: string;
+  duration: string;
+  description: string;
+  /** Paths relative to /public */
+  src: string;
+  poster: string;
+  /** Lesson vocabulary shown as floating chips around the phone */
+  keywords: string[];
+}
+
+export const LESSON_VIDEO: LessonVideo = {
+  title: "Parts of a Plant",
+  grade: "Grade 1",
+  subject: "Science",
+  duration: "1:14",
+  description:
+    "An AI-animated, narrated lesson: a student and her teacher dig up a plant to meet its " +
+    "roots, stem, leaves, flower and fruit — made for the class screen.",
+  src: "/videos/plants-lesson.mp4",
+  poster: "/images/teacherhelper/plants-poster.jpg",
+  keywords: ["Roots", "Stem", "Leaves", "Flower", "Fruit"],
+};
+
+export interface WorksheetPage {
+  title: string;
+  topic: string;
+  /** Path relative to /public — 1105 × 1338 px */
+  image: string;
+}
+
+export const WORKSHEETS: WorksheetPage[] = [
+  { title: "Let's Name a Number!",     topic: "Three-digit numbers",         image: "/images/teacherhelper/worksheet-1.jpg" },
+  { title: "Bolt's Number Builder",    topic: "Add & subtract 10 and 100",   image: "/images/teacherhelper/worksheet-2.jpg" },
+  { title: "Trade a Hundred!",         topic: "Regrouping hundreds",         image: "/images/teacherhelper/worksheet-3.jpg" },
+  { title: "Treasure Trail",           topic: "Compare & order numbers",     image: "/images/teacherhelper/worksheet-4.jpg" },
+  { title: "Which Number Is Greater?", topic: "Comparing with >, < and =",   image: "/images/teacherhelper/worksheet-5.jpg" },
+  { title: "Rocket Route",             topic: "Reading number names",        image: "/images/teacherhelper/worksheet-6.jpg" },
+];
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ProjectShowcase types & data

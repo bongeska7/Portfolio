@@ -1,12 +1,15 @@
-import HeroSection     from "@/components/HeroSection";
-import ProjectShowcase  from "@/components/ProjectShowcase";
-import CredentialsDeck  from "@/components/CredentialsDeck";
-import SkillsBento      from "@/components/SkillsBento";
-import ContactFooter    from "@/components/ContactFooter";
+import HeroSection          from "@/components/HeroSection";
+import ExperienceSection    from "@/components/ExperienceSection";
+import ProjectShowcase      from "@/components/ProjectShowcase";
+import TeacherHelperSection from "@/components/TeacherHelperSection";
+import CredentialsDeck      from "@/components/CredentialsDeck";
+import SkillsBento          from "@/components/SkillsBento";
+import ContactFooter        from "@/components/ContactFooter";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Home page — Portfolio root
-// Sections: Hero → Projects → Credentials → Skills → Contact Footer
+// Sections: Hero → Experience → Projects → TeacherHelper → Credentials
+//           → Skills → Contact Footer
 //
 // This is intentionally a Server Component. Interactive sections carry their
 // own "use client" directives so only the necessary subtrees hydrate.
@@ -36,8 +39,14 @@ export default function HomePage() {
         {/* ── Hero ───────────────────────────────────────────────────────── */}
         <HeroSection />
 
+        {/* ── Current Role — ICS Financial Systems ───────────────────────── */}
+        <ExperienceSection />
+
         {/* ── Projects Showcase ──────────────────────────────────────────── */}
         <ProjectShowcase />
+
+        {/* ── TeacherHelper — side business ──────────────────────────────── */}
+        <TeacherHelperSection />
 
         {/* ── Credentials & Gallery Deck ─────────────────────────────────── */}
         <CredentialsDeck />

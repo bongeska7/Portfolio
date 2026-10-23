@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Omar Aziz Ahmad is a Computer Science graduate from the University of Jordan specializing in " +
-    "AI engineering, Python development, product design, and systems thinking.",
+    "Omar Aziz Ahmad is a Developer at ICS Financial Systems and a Computer Science graduate from the " +
+    "University of Jordan specializing in AI engineering, Python development, product design, and systems thinking.",
 
   keywords: [
     "Omar Aziz Ahmad",
